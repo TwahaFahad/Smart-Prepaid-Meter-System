@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Anomaly Detection Dashboard</title>
+    <script>
+        function fetchData() {
+            fetch('/monitoring/data/')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('actual_values').innerText = data.actual_values.join(', ');
+                document.getElementById('predicted_values').innerText = data.predicted_values.join(', ');
+                document.getElementById('anomalies').innerText = data.anomalies.map(a => `${a[0]} - ${a[1]}`).join(', ');
+            });
+        }
+
+        // Fetch data every 5 seconds
+        setInterval(fetchData, 5000);
+    </script>
+</head>
+<body>
+    <h1>Anomaly Detection Dashboard</h1>
+    <p><strong>Actual Values:</strong> <span id="actual_values"></span></p>
+    <p><strong>Predicted Values:</strong> <span id="predicted_values"></span></p>
+    <p><strong>Anomalies:</strong> <span id="anomalies"></span></p>
+</body>
+</html>

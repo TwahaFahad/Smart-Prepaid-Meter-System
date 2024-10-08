@@ -1,0 +1,464 @@
+{% extends 'balances/base.html' %}
+{% load static %}
+{% block content %}
+      <!-- Main Content Wrapper -->
+      <main class="main-content w-full px-[var(--margin-x)] pb-8">
+        <div
+          class="mt-4 grid grid-cols-1 gap-4 sm:mt-5 sm:gap-5 lg:mt-6 lg:gap-6"
+        >
+
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-2 lg:gap-6">
+            
+            <div class="card">
+              <div class="mt-3 flex items-center justify-between px-4 sm:px-5">
+                <h2
+                  class="font-medium tracking-wide text-slate-700 dark:text-navy-100"
+                >
+                  Switch 1
+                </h2>
+
+                <div
+                  x-data="usePopper({placement:'bottom-end',offset:4})"
+                  @click.outside="isShowPopper && (isShowPopper = false)"
+                  class="inline-flex"
+                >
+                  <button
+                    x-ref="popperRef"
+                    @click="isShowPopper = !isShowPopper"
+                    class="btn -mr-2 h-7 w-7 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+                      />
+                    </svg>
+                  </button>
+
+                  <div
+                    x-ref="popperRoot"
+                    class="popper-root"
+                    :class="isShowPopper && 'show'"
+                  >
+                    <div
+                      class="popper-box rounded-md border border-slate-150 bg-white py-1.5 font-inter dark:border-navy-500 dark:bg-navy-700"
+                    >
+                      <ul>
+                        <li>
+                          <a
+                            href="#"
+                            class="flex h-8 items-center px-3 pr-8 font-medium tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800 dark:hover:bg-navy-600 dark:hover:text-navy-100 dark:focus:bg-navy-600 dark:focus:text-navy-100"
+                            >Today</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            class="flex h-8 items-center px-3 pr-8 font-medium tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800 dark:hover:bg-navy-600 dark:hover:text-navy-100 dark:focus:bg-navy-600 dark:focus:text-navy-100"
+                            >This Week</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            class="flex h-8 items-center px-3 pr-8 font-medium tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800 dark:hover:bg-navy-600 dark:hover:text-navy-100 dark:focus:bg-navy-600 dark:focus:text-navy-100"
+                            >This Month</a
+                          >
+                        </li>
+                      </ul>
+                      <div
+                        class="my-1 h-px bg-slate-150 dark:bg-navy-500"
+                      ></div>
+                      <ul>
+                        <li>
+                          <a
+                            href="#"
+                            class="flex h-8 items-center px-3 pr-8 font-medium tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800 dark:hover:bg-navy-600 dark:hover:text-navy-100 dark:focus:bg-navy-600 dark:focus:text-navy-100"
+                            >Total</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p
+              id="actual_power" class="grow px-4 text-xl font-semibold text-slate-700 dark:text-navy-100 sm:px-5"
+              >
+              </p>
+              <div class="ax-transparent-gridline">
+                <div
+                x-init="$nextTick(() => { 
+                  $el._x_chart = new ApexCharts($el, pages.charts.orderIncome); 
+                  $el._x_chart.render(); 
+                  setInterval(() => { 
+                      updateChartData(); 
+                  }, 5000); 
+              })"
+                ></div>
+              </div>
+            </div>
+
+            <div class="card">
+              <div class="mt-3 flex items-center justify-between px-4 sm:px-5">
+                <h2
+                  class="font-medium tracking-wide text-slate-700 dark:text-navy-100"
+                >
+                  Switch 2
+                </h2>
+
+                <div
+                  x-data="usePopper({placement:'bottom-end',offset:4})"
+                  @click.outside="isShowPopper && (isShowPopper = false)"
+                  class="inline-flex"
+                >
+                  <button
+                    x-ref="popperRef"
+                    @click="isShowPopper = !isShowPopper"
+                    class="btn -mr-2 h-7 w-7 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                      stroke-width="2"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
+                      />
+                    </svg>
+                  </button>
+
+                  <div
+                    x-ref="popperRoot"
+                    class="popper-root"
+                    :class="isShowPopper && 'show'"
+                  >
+                    <div
+                      class="popper-box rounded-md border border-slate-150 bg-white py-1.5 font-inter dark:border-navy-500 dark:bg-navy-700"
+                    >
+                      <ul>
+                        <li>
+                          <a
+                            href="#"
+                            class="flex h-8 items-center px-3 pr-8 font-medium tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800 dark:hover:bg-navy-600 dark:hover:text-navy-100 dark:focus:bg-navy-600 dark:focus:text-navy-100"
+                            >Today</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            class="flex h-8 items-center px-3 pr-8 font-medium tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800 dark:hover:bg-navy-600 dark:hover:text-navy-100 dark:focus:bg-navy-600 dark:focus:text-navy-100"
+                            >This Week</a
+                          >
+                        </li>
+                        <li>
+                          <a
+                            href="#"
+                            class="flex h-8 items-center px-3 pr-8 font-medium tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800 dark:hover:bg-navy-600 dark:hover:text-navy-100 dark:focus:bg-navy-600 dark:focus:text-navy-100"
+                            >This Month</a
+                          >
+                        </li>
+                      </ul>
+                      <div
+                        class="my-1 h-px bg-slate-150 dark:bg-navy-500"
+                      ></div>
+                      <ul>
+                        <li>
+                          <a
+                            href="#"
+                            class="flex h-8 items-center px-3 pr-8 font-medium tracking-wide outline-none transition-all hover:bg-slate-100 hover:text-slate-800 focus:bg-slate-100 focus:text-slate-800 dark:hover:bg-navy-600 dark:hover:text-navy-100 dark:focus:bg-navy-600 dark:focus:text-navy-100"
+                            >Total</a
+                          >
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p
+               id="actual_power2" class="grow px-4 text-xl font-semibold text-slate-700 dark:text-navy-100 sm:px-5"
+              >
+                
+              </p>
+              <div class="ax-transparent-gridline">
+                <div
+                x-init="$nextTick(() => { 
+                  $el._x_chart = new ApexCharts($el, pages.charts.orderIncome); 
+                  $el._x_chart.render(); 
+                  setInterval(() => { 
+                      updateChartData(); 
+                  }, 5000); 
+              })"
+                ></div>
+              </div>
+            </div>
+
+            
+
+
+
+          </div>
+
+
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-2 lg:gap-6">
+            
+<!-- Notification
+            <h1>PC socket</h1>
+            <p><strong>Actual Value:</strong> <span id="actual_values"></span></p>
+            <p><strong>Predicted Value:</strong> <span id="predicted_values"></span></p>
+            <p><strong>Anomaly:</strong> <span id="anomalies"></span></p>
+            <h1>Bulb Socket</h1>
+            <p><strong>Actual Value:</strong> <span id="actual_values2"></span></p>
+            <p><strong>Predicted Value:</strong> <span id="predicted_values2"></span></p>
+            <p><strong>Anomaly:</strong> <span id="anomalies2"></span></p>
+-->
+            
+            <div class="card space-y-9 p-4 sm:p-5">
+              <div class="flex justify-between">
+                <div class="flex items-center space-x-3">
+                  <div>
+                    <p class="font-medium text-slate-700 dark:text-navy-100">
+                      Switch 1
+                    </p>
+                  </div>
+                </div>
+                <div class="flex space-x-2">
+
+              <!-- Notification-->
+              <div
+                x-effect="if($store.global.isSearchbarActive) isShowPopper = false"
+                x-data="usePopper({placement:'bottom-end',offset:12})"
+                @click.outside="isShowPopper && (isShowPopper = false)"
+                class="flex"
+              >
+                <button
+                  @click="isShowPopper = !isShowPopper"
+                  x-ref="popperRef"
+                  class="btn relative h-8 w-8 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 text-slate-500 dark:text-navy-100"
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.5"
+                      d="M15.375 17.556h-6.75m6.75 0H21l-1.58-1.562a2.254 2.254 0 01-.67-1.596v-3.51a6.612 6.612 0 00-1.238-3.85 6.744 6.744 0 00-3.262-2.437v-.379c0-.59-.237-1.154-.659-1.571A2.265 2.265 0 0012 2c-.597 0-1.169.234-1.591.65a2.208 2.208 0 00-.659 1.572v.38c-2.621.915-4.5 3.385-4.5 6.287v3.51c0 .598-.24 1.172-.67 1.595L3 17.556h12.375zm0 0v1.11c0 .885-.356 1.733-.989 2.358A3.397 3.397 0 0112 22a3.397 3.397 0 01-2.386-.976 3.313 3.313 0 01-.989-2.357v-1.111h6.75z"
+                    />
+                  </svg>
+
+                  <span
+                    class="absolute -right-px -top-px flex h-3 w-3 items-center justify-center"
+                  >
+                    <span
+                      class="absolute inline-flex h-full w-full animate-ping rounded-full bg-secondary opacity-80"
+                    ></span>
+                    <span
+                      class="inline-flex h-2 w-2 rounded-full bg-secondary"
+                    ></span>
+                  </span>
+                </button>
+                <div
+                  :class="isShowPopper && 'show'"
+                  class="popper-root"
+                  x-ref="popperRoot"
+                >
+                  <div
+                    x-data="{activeTab:'tabAll'}"
+                    class="popper-box mx-4 mt-1 flex max-h-[calc(100vh-6rem)] w-[calc(100vw-2rem)] flex-col rounded-lg border border-slate-150 bg-white shadow-soft dark:border-navy-800 dark:bg-navy-700 dark:shadow-soft-dark sm:m-0 sm:w-80"
+                  >
+                    <div
+                      class="rounded-t-lg bg-slate-100 text-slate-600 dark:bg-navy-800 dark:text-navy-200"
+                    >
+
+
+                      <div class="is-scrollbar-hidden flex shrink-0 overflow-x-auto px-3">
+                        <button
+                          @click="activeTab = 'tabAll'"
+                          :class="activeTab === 'tabAll' ? 'border-primary dark:border-accent text-primary dark:text-accent-light' : 'border-transparent hover:text-slate-800 focus:text-slate-800 dark:hover:text-navy-100 dark:focus:text-navy-100'"
+                          class="btn shrink-0 rounded-none border-b-2 px-3.5 py-2.5"
+                        >
+                          <span>Action</span>
+                        </button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+                </div>
+              </div>
+              <div class="flex justify-between space-x-2">
+                <div>
+                  <p class="text-xs+">Predicted Power</p>
+                  <p id="predicted_values" class="text-xl font-semibold text-slate-700 dark:text-navy-100"></p>
+                </div>
+                <div>
+                  <p class="text-xs+">Actual Power</p>
+                  <p id="actual_values" class="text-xl font-semibold text-slate-700 dark:text-navy-100"></p>
+                </div>
+                <div>
+                  <p class="text-xs+">Anomaly?</p>
+                  <p id="anomalies" class="text-xl font-semibold text-slate-700 dark:text-navy-100"></p>
+                </div>
+              </div>
+
+            </div>
+
+
+            <div class="card space-y-9 p-4 sm:p-5">
+              <div class="flex justify-between">
+                <div class="flex items-center space-x-3">
+                  <div>
+                    <p class="font-medium text-slate-700 dark:text-navy-100">
+                      Switch 2
+                    </p>
+                  </div>
+                </div>
+                <div class="flex space-x-2">
+
+              <!-- Notification-->
+              <div
+                x-effect="if($store.global.isSearchbarActive) isShowPopper = false"
+                x-data="usePopper({placement:'bottom-end',offset:12})"
+                @click.outside="isShowPopper && (isShowPopper = false)"
+                class="flex"
+              >
+                <button
+                  @click="isShowPopper = !isShowPopper"
+                  x-ref="popperRef"
+                  class="btn relative h-8 w-8 rounded-full p-0 hover:bg-slate-300/20 focus:bg-slate-300/20 active:bg-slate-300/25 dark:hover:bg-navy-300/20 dark:focus:bg-navy-300/20 dark:active:bg-navy-300/25"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="h-5 w-5 text-slate-500 dark:text-navy-100"
+                    stroke="currentColor"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="1.5"
+                      d="M15.375 17.556h-6.75m6.75 0H21l-1.58-1.562a2.254 2.254 0 01-.67-1.596v-3.51a6.612 6.612 0 00-1.238-3.85 6.744 6.744 0 00-3.262-2.437v-.379c0-.59-.237-1.154-.659-1.571A2.265 2.265 0 0012 2c-.597 0-1.169.234-1.591.65a2.208 2.208 0 00-.659 1.572v.38c-2.621.915-4.5 3.385-4.5 6.287v3.51c0 .598-.24 1.172-.67 1.595L3 17.556h12.375zm0 0v1.11c0 .885-.356 1.733-.989 2.358A3.397 3.397 0 0112 22a3.397 3.397 0 01-2.386-.976 3.313 3.313 0 01-.989-2.357v-1.111h6.75z"
+                    />
+                  </svg>
+
+                  <span
+                    class="absolute -right-px -top-px flex h-3 w-3 items-center justify-center"
+                  >
+                    <span
+                      class="absolute inline-flex h-full w-full animate-ping rounded-full bg-secondary opacity-80"
+                    ></span>
+                    <span
+                      class="inline-flex h-2 w-2 rounded-full bg-secondary"
+                    ></span>
+                  </span>
+                </button>
+                <div
+                  :class="isShowPopper && 'show'"
+                  class="popper-root"
+                  x-ref="popperRoot"
+                >
+                  <div
+                    x-data="{activeTab:'tabAll'}"
+                    class="popper-box mx-4 mt-1 flex max-h-[calc(100vh-6rem)] w-[calc(100vw-2rem)] flex-col rounded-lg border border-slate-150 bg-white shadow-soft dark:border-navy-800 dark:bg-navy-700 dark:shadow-soft-dark sm:m-0 sm:w-80"
+                  >
+                    <div
+                      class="rounded-t-lg bg-slate-100 text-slate-600 dark:bg-navy-800 dark:text-navy-200"
+                    >
+
+
+                      <div class="is-scrollbar-hidden flex shrink-0 overflow-x-auto px-3">
+                        <button
+                          @click="activeTab = 'tabAll'"
+                          :class="activeTab === 'tabAll' ? 'border-primary dark:border-accent text-primary dark:text-accent-light' : 'border-transparent hover:text-slate-800 focus:text-slate-800 dark:hover:text-navy-100 dark:focus:text-navy-100'"
+                          class="btn shrink-0 rounded-none border-b-2 px-3.5 py-2.5"
+                        >
+                          <span>Action</span>
+                        </button>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+
+                </div>
+              </div>
+              <div class="flex justify-between space-x-2">
+                <div>
+                  <p class="text-xs+">Predicted Power</p>
+                  <p id="predicted_values2" class="text-xl font-semibold text-slate-700 dark:text-navy-100"></p>
+                </div>
+                <div>
+                  <p class="text-xs+">Actual Power</p>
+                  <p id="actual_values2" class="text-xl font-semibold text-slate-700 dark:text-navy-100"></p>
+                </div>
+                <div>
+                  <p class="text-xs+">Anomaly?</p>
+                  <p id="anomalies2" class="text-xl font-semibold text-slate-700 dark:text-navy-100"></p>
+                </div>
+              </div>
+
+            </div>
+
+
+
+
+
+          </div>
+
+
+          <div>
+            <div class="flex h-8 items-center justify-between">
+              <h2
+                class="line-clamp-1 font-medium tracking-wide text-slate-700 dark:text-navy-100"
+              >
+                Usage History
+              </h2>
+
+              <select
+                class="form-select h-8 rounded-full border border-slate-300 bg-slate-50 px-2.5 pr-9 text-xs+ hover:border-slate-400 focus:border-primary dark:border-navy-600 dark:bg-navy-900 dark:hover:border-navy-400 dark:focus:border-accent"
+              >
+                <option>05 - 12 May</option>
+                <option>12 - 19 May</option>
+                <option>19 - 26 May</option>
+                <option>26 - 02 June</option>
+                <option>02 - 09 June</option>
+              </select>
+            </div>
+
+            <div>
+              <div
+                x-init="$nextTick(() => { $el._x_chart = new ApexCharts($el,pages.charts.influencerActivity); $el._x_chart.render() });"
+              ></div>
+            </div>
+          </div>
+
+
+
+
+
+
+        </div>
+      </main>
+{% endblock %}
